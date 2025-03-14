@@ -2,8 +2,8 @@
 package gb28181db
 
 import (
-	"github.com/gowvp/gb28181/internal/core/gb28181"
 	"gorm.io/gorm"
+	"wvp/internal/core/gb28181"
 )
 
 var _ gb28181.Storer = DB{}

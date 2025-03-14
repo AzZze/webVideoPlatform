@@ -4,9 +4,9 @@ package gb28181db
 import (
 	"context"
 
-	"github.com/gowvp/gb28181/internal/core/gb28181"
 	"github.com/ixugo/goweb/pkg/orm"
 	"gorm.io/gorm"
+	"wvp/internal/core/gb28181"
 )
 
 var _ gb28181.DeviceStorer = Device{}

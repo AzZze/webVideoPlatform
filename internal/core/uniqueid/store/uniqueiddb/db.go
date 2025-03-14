@@ -2,8 +2,8 @@
 package uniqueiddb
 
 import (
-	"github.com/gowvp/gb28181/internal/core/uniqueid"
 	"gorm.io/gorm"
+	"wvp/internal/core/uniqueid"
 )
 
 var _ uniqueid.Storer = DB{}

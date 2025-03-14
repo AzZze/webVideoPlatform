@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/gowvp/gb28181/internal/core/gb28181"
 	"github.com/ixugo/goweb/pkg/orm"
+	"wvp/internal/core/gb28181"
 )
 
 func TestDeviceGet(t *testing.T) {

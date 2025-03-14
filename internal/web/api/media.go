@@ -6,11 +6,11 @@ import (
 	"log/slog"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gowvp/gb28181/internal/conf"
-	"github.com/gowvp/gb28181/internal/core/media"
-	"github.com/gowvp/gb28181/internal/core/sms"
 	"github.com/ixugo/goweb/pkg/hook"
 	"github.com/ixugo/goweb/pkg/web"
+	"wvp/internal/conf"
+	"wvp/internal/core/media"
+	"wvp/internal/core/sms"
 )
 
 type MediaAPI struct {

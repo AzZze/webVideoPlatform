@@ -3,8 +3,8 @@ package gb28181cache
 import (
 	"context"
 
-	"github.com/gowvp/gb28181/internal/core/gb28181"
 	"github.com/ixugo/goweb/pkg/orm"
+	"wvp/internal/core/gb28181"
 )
 
 var _ gb28181.ChannelStorer = &Channel{}

@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gowvp/gb28181/plugin/stat"
 	"github.com/ixugo/goweb/pkg/web"
+	"wvp/plugin/stat"
 )
 
 func Register(g gin.IRouter, hf ...gin.HandlerFunc) {

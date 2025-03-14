@@ -3,10 +3,10 @@ package gb28181
 import (
 	"context"
 
-	"github.com/gowvp/gb28181/internal/core/bz"
-	"github.com/gowvp/gb28181/internal/core/uniqueid"
 	"github.com/ixugo/goweb/pkg/orm"
 	"github.com/ixugo/goweb/pkg/web"
+	"wvp/internal/core/bz"
+	"wvp/internal/core/uniqueid"
 )
 
 type GB28181 struct {

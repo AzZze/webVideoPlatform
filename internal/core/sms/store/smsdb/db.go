@@ -2,10 +2,10 @@
 package smsdb
 
 import (
-	"github.com/gowvp/gb28181/internal/core/gb28181"
-	"github.com/gowvp/gb28181/internal/core/sms"
-	"github.com/gowvp/gb28181/pkg/gbs"
 	"gorm.io/gorm"
+	"wvp/internal/core/gb28181"
+	"wvp/internal/core/sms"
+	"wvp/pkg/gbs"
 )
 
 var _ sms.Storer = DB{}

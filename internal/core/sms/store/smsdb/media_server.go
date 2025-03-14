@@ -4,9 +4,9 @@ package smsdb
 import (
 	"context"
 
-	"github.com/gowvp/gb28181/internal/core/sms"
 	"github.com/ixugo/goweb/pkg/orm"
 	"gorm.io/gorm"
+	"wvp/internal/core/sms"
 )
 
 var _ sms.MediaServerStorer = MediaServer{}

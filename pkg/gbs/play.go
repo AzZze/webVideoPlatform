@@ -7,12 +7,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gowvp/gb28181/internal/core/gb28181"
-	"github.com/gowvp/gb28181/internal/core/sms"
-	"github.com/gowvp/gb28181/pkg/gbs/m"
-	"github.com/gowvp/gb28181/pkg/gbs/sip"
-	"github.com/gowvp/gb28181/pkg/zlm"
 	sdp "github.com/panjjo/gosdp"
+	"wvp/internal/core/gb28181"
+	"wvp/internal/core/sms"
+	"wvp/pkg/gbs/m"
+	"wvp/pkg/gbs/sip"
+	"wvp/pkg/zlm"
 )
 
 type PlayInput struct {

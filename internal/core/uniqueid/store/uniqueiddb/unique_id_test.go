@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/gowvp/gb28181/internal/core/uniqueid"
 	"github.com/ixugo/goweb/pkg/orm"
+	"wvp/internal/core/uniqueid"
 )
 
 func TestUniqueIDGet(t *testing.T) {

@@ -5,12 +5,12 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gowvp/gb28181/internal/conf"
-	"github.com/gowvp/gb28181/internal/core/config"
-	"github.com/gowvp/gb28181/internal/core/config/store/configdb"
 	"github.com/ixugo/goweb/pkg/web"
 	"github.com/jinzhu/copier"
 	"gorm.io/gorm"
+	"wvp/internal/conf"
+	"wvp/internal/core/config"
+	"wvp/internal/core/config/store/configdb"
 )
 
 type ConfigAPI struct {

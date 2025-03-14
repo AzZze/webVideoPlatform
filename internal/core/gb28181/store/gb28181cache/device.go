@@ -3,11 +3,11 @@ package gb28181cache
 import (
 	"context"
 
-	"github.com/gowvp/gb28181/internal/core/gb28181"
-	"github.com/gowvp/gb28181/pkg/gbs"
 	"github.com/ixugo/goweb/pkg/orm"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
+	"wvp/internal/core/gb28181"
+	"wvp/pkg/gbs"
 )
 
 var _ gb28181.DeviceStorer = &Device{}

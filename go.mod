@@ -1,4 +1,4 @@
-module github.com/gowvp/gb28181
+module wvp
 
 go 1.24
 
@@ -12,6 +12,7 @@ require (
 	github.com/jinzhu/copier v0.4.0
 	github.com/pelletier/go-toml/v2 v2.2.3
 	github.com/shirou/gopsutil v3.21.11+incompatible
+	gorm.io/driver/mysql v1.5.7
 	gorm.io/driver/postgres v1.5.11
 	gorm.io/gorm v1.25.12
 )
@@ -19,7 +20,6 @@ require (
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/go-sql-driver/mysql v1.9.0 // indirect
-	gorm.io/driver/mysql v1.5.7 // indirect
 )
 
 require (

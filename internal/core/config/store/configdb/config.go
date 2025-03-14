@@ -4,9 +4,9 @@ package configdb
 import (
 	"context"
 
-	"github.com/gowvp/gb28181/internal/core/config"
 	"github.com/ixugo/goweb/pkg/orm"
 	"gorm.io/gorm"
+	"wvp/internal/core/config"
 )
 
 var _ config.ConfigStorer = Config{}

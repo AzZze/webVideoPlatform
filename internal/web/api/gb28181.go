@@ -6,14 +6,14 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gowvp/gb28181/internal/core/bz"
-	"github.com/gowvp/gb28181/internal/core/gb28181"
-	"github.com/gowvp/gb28181/internal/core/media"
-	"github.com/gowvp/gb28181/internal/core/sms"
-	"github.com/gowvp/gb28181/internal/core/uniqueid"
-	"github.com/gowvp/gb28181/pkg/gbs"
-	"github.com/gowvp/gb28181/pkg/zlm"
 	"github.com/ixugo/goweb/pkg/web"
+	"wvp/internal/core/bz"
+	"wvp/internal/core/gb28181"
+	"wvp/internal/core/media"
+	"wvp/internal/core/sms"
+	"wvp/internal/core/uniqueid"
+	"wvp/pkg/gbs"
+	"wvp/pkg/zlm"
 )
 
 type GB28181API struct {

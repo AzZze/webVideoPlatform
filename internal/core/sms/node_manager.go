@@ -6,11 +6,11 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/gowvp/gb28181/internal/conf"
-	"github.com/gowvp/gb28181/pkg/zlm"
 	"github.com/ixugo/goweb/pkg/conc"
 	"github.com/ixugo/goweb/pkg/orm"
 	"github.com/ixugo/goweb/pkg/web"
+	"wvp/internal/conf"
+	"wvp/pkg/zlm"
 )
 
 type WarpMediaServer struct {

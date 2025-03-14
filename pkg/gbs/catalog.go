@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"net"
 
-	"github.com/gowvp/gb28181/pkg/gbs/sip"
+	"wvp/pkg/gbs/sip"
 )
 
 // MessageDeviceListResponse 设备明细列表返回结构

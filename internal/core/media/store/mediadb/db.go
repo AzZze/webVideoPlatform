@@ -2,8 +2,8 @@
 package mediadb
 
 import (
-	"github.com/gowvp/gb28181/internal/core/media"
 	"gorm.io/gorm"
+	"wvp/internal/core/media"
 )
 
 var _ media.Storer = DB{}

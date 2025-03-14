@@ -1,8 +1,8 @@
 package versiondb
 
 import (
-	"github.com/gowvp/gb28181/internal/core/version"
 	"gorm.io/gorm"
+	"wvp/internal/core/version"
 )
 
 // DB ...

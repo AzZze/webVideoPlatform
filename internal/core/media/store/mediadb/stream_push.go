@@ -4,9 +4,9 @@ package mediadb
 import (
 	"context"
 
-	"github.com/gowvp/gb28181/internal/core/media"
 	"github.com/ixugo/goweb/pkg/orm"
 	"gorm.io/gorm"
+	"wvp/internal/core/media"
 )
 
 var _ media.StreamPushStorer = StreamPush{}

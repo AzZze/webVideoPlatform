@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/gowvp/gb28181/internal/core/sms"
 	"github.com/ixugo/goweb/pkg/orm"
+	"wvp/internal/core/sms"
 )
 
 func TestMediaServerGet(t *testing.T) {

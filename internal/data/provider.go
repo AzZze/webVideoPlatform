@@ -8,10 +8,10 @@ import (
 
 	"github.com/glebarez/sqlite"
 	"github.com/google/wire"
-	"github.com/gowvp/gb28181/internal/conf"
 	"github.com/ixugo/goweb/pkg/orm"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"wvp/internal/conf"
 )
 
 // ProviderSet is data providers.
@@ -70,5 +70,5 @@ func getDialector(dsn string) (gorm.Dialector, bool) {
 			DSN:        dsn,
 		}), false
 	}
-	return sqlite.Open("E:\\goWorkSpace\\gb28181\\configs\\data.db"), true
+	return sqlite.Open(dsn), true
 }

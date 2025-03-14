@@ -3,11 +3,11 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/gowvp/gb28181/internal/conf"
-	"github.com/gowvp/gb28181/internal/core/sms"
-	"github.com/gowvp/gb28181/internal/core/sms/store/smsdb"
 	"github.com/ixugo/goweb/pkg/web"
 	"gorm.io/gorm"
+	"wvp/internal/conf"
+	"wvp/internal/core/sms"
+	"wvp/internal/core/sms/store/smsdb"
 )
 
 type SmsAPI struct {

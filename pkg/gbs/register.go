@@ -7,12 +7,12 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/gowvp/gb28181/internal/conf"
-	"github.com/gowvp/gb28181/internal/core/gb28181"
-	"github.com/gowvp/gb28181/internal/core/sms"
-	"github.com/gowvp/gb28181/pkg/gbs/sip"
 	"github.com/ixugo/goweb/pkg/conc"
 	"github.com/ixugo/goweb/pkg/orm"
+	"wvp/internal/conf"
+	"wvp/internal/core/gb28181"
+	"wvp/internal/core/sms"
+	"wvp/pkg/gbs/sip"
 )
 
 const ignorePassword = "#"

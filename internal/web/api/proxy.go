@@ -3,11 +3,11 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/gowvp/gb28181/internal/core/proxy"
-	"github.com/gowvp/gb28181/internal/core/proxy/store/proxydb"
-	"github.com/gowvp/gb28181/internal/core/uniqueid"
 	"github.com/ixugo/goweb/pkg/web"
 	"gorm.io/gorm"
+	"wvp/internal/core/proxy"
+	"wvp/internal/core/proxy/store/proxydb"
+	"wvp/internal/core/uniqueid"
 )
 
 type ProxyAPI struct {

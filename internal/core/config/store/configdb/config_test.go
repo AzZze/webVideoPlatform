@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/gowvp/gb28181/internal/core/config"
 	"github.com/ixugo/goweb/pkg/orm"
+	"wvp/internal/core/config"
 )
 
 func TestConfigGet(t *testing.T) {

@@ -12,10 +12,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gowvp/gb28181/internal/conf"
 	"github.com/ixugo/goweb/pkg/logger"
 	"github.com/ixugo/goweb/pkg/server"
 	"github.com/ixugo/goweb/pkg/system"
+	"wvp/internal/conf"
 )
 
 var (
@@ -48,7 +48,7 @@ func main() {
 	fileDir, _ := abs(*configDir)
 	filePath := filepath.Join(fileDir, "config.toml")
 	configIsNotExistWrite(filePath)
-	if err := conf.SetupConfig(&bc, "E:\\goWorkSpace\\gb28181\\configs\\config.toml"); err != nil {
+	if err := conf.SetupConfig(&bc, filePath); err != nil {
 		panic(err)
 	}
 
@@ -112,11 +112,11 @@ func abs(path string) (string, error) {
 	if filepath.IsAbs(path) {
 		return filepath.Clean(path), nil
 	}
-	bin, err := os.Executable()
+	wd, err := os.Getwd()
 	if err != nil {
 		return "", err
 	}
-	return filepath.Join(filepath.Dir(bin), path), nil
+	return filepath.Join(wd, path), nil
 }
 
 func configIsNotExistWrite(path string) {

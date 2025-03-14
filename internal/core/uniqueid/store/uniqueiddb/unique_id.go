@@ -4,9 +4,9 @@ package uniqueiddb
 import (
 	"context"
 
-	"github.com/gowvp/gb28181/internal/core/uniqueid"
 	"github.com/ixugo/goweb/pkg/orm"
 	"gorm.io/gorm"
+	"wvp/internal/core/uniqueid"
 )
 
 var _ uniqueid.UniqueIDStorer = UniqueID{}

@@ -7,12 +7,12 @@
 package main
 
 import (
-	"github.com/gowvp/gb28181/internal/conf"
-	"github.com/gowvp/gb28181/internal/data"
-	"github.com/gowvp/gb28181/internal/web/api"
-	"github.com/gowvp/gb28181/pkg/gbs"
 	"log/slog"
 	"net/http"
+	"wvp/internal/conf"
+	"wvp/internal/data"
+	"wvp/internal/web/api"
+	"wvp/pkg/gbs"
 )
 
 // Injectors from wire.go:

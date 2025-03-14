@@ -10,13 +10,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gowvp/gb28181/internal/conf"
-	"github.com/gowvp/gb28181/internal/core/gb28181"
-	"github.com/gowvp/gb28181/internal/core/sms"
-	"github.com/gowvp/gb28181/pkg/gbs/m"
-	"github.com/gowvp/gb28181/pkg/gbs/sip"
 	"github.com/ixugo/goweb/pkg/conc"
 	"github.com/ixugo/goweb/pkg/system"
+	"wvp/internal/conf"
+	"wvp/internal/core/gb28181"
+	"wvp/internal/core/sms"
+	"wvp/pkg/gbs/m"
+	"wvp/pkg/gbs/sip"
 )
 
 type MemoryStorer interface {

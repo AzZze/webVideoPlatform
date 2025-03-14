@@ -5,12 +5,12 @@ import (
 	"net/url"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gowvp/gb28181/internal/conf"
-	"github.com/gowvp/gb28181/internal/core/gb28181"
-	"github.com/gowvp/gb28181/internal/core/media"
-	"github.com/gowvp/gb28181/internal/core/sms"
-	"github.com/gowvp/gb28181/pkg/gbs"
 	"github.com/ixugo/goweb/pkg/web"
+	"wvp/internal/conf"
+	"wvp/internal/core/gb28181"
+	"wvp/internal/core/media"
+	"wvp/internal/core/sms"
+	"wvp/pkg/gbs"
 )
 
 type WebHookAPI struct {

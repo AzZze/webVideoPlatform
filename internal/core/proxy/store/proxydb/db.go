@@ -2,8 +2,8 @@
 package proxydb
 
 import (
-	"github.com/gowvp/gb28181/internal/core/proxy"
 	"gorm.io/gorm"
+	"wvp/internal/core/proxy"
 )
 
 var _ proxy.Storer = DB{}

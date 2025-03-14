@@ -13,10 +13,10 @@ import (
 
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
-	"github.com/gowvp/gb28181/plugin/stat"
-	"github.com/gowvp/gb28181/plugin/stat/statapi"
 	"github.com/ixugo/goweb/pkg/system"
 	"github.com/ixugo/goweb/pkg/web"
+	"wvp/plugin/stat"
+	"wvp/plugin/stat/statapi"
 )
 
 var startRuntime = time.Now()

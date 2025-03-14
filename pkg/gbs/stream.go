@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gowvp/gb28181/pkg/gbs/sip"
+	"wvp/pkg/gbs/sip"
 )
 
 // Streams Streams

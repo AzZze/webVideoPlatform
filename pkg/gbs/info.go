@@ -1,8 +1,8 @@
 package gbs
 
 import (
-	"github.com/gowvp/gb28181/internal/core/gb28181"
-	"github.com/gowvp/gb28181/pkg/gbs/sip"
+	"wvp/internal/core/gb28181"
+	"wvp/pkg/gbs/sip"
 )
 
 // QueryDeviceInfo 设备信息查询请求

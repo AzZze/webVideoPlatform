@@ -2,8 +2,8 @@
 package configdb
 
 import (
-	"github.com/gowvp/gb28181/internal/core/config"
 	"gorm.io/gorm"
+	"wvp/internal/core/config"
 )
 
 var _ config.Storer = DB{}

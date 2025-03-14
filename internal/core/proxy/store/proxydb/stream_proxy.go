@@ -4,9 +4,9 @@ package proxydb
 import (
 	"context"
 
-	"github.com/gowvp/gb28181/internal/core/proxy"
 	"github.com/ixugo/goweb/pkg/orm"
 	"gorm.io/gorm"
+	"wvp/internal/core/proxy"
 )
 
 var _ proxy.StreamProxyStorer = StreamProxy{}

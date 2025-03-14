@@ -2,7 +2,7 @@
 package gb28181
 
 import (
-	"github.com/gowvp/gb28181/internal/core/uniqueid"
+	"wvp/internal/core/uniqueid"
 )
 
 // Storer data persistence

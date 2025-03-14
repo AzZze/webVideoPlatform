@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/gowvp/gb28181/internal/core/proxy"
 	"github.com/ixugo/goweb/pkg/orm"
+	"wvp/internal/core/proxy"
 )
 
 func TestStreamProxyGet(t *testing.T) {
