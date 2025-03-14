@@ -1,0 +1,4 @@
+docker run -d --name zlmediakit -p 1935:1935 -p 554:554 -p 8080:8080 -p 8443:443 -p 10000:10000 -p 10000:10000/udp -p 8000:8000/udp -p 9000:9000/udp -p 20050-20100:20050-20100 -p 20000-20500:20000-20500/udp -v C:\zlmediakit-config:/opt/media/conf zlmediakit/zlmediakit:master
+
+
+
