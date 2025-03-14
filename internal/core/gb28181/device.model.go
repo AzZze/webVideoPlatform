@@ -17,16 +17,16 @@ type Device struct {
 	IP           string    `gorm:"column:ip;notNull;default:''" json:"ip"`
 	Port         int       `gorm:"column:port;notNull;default:0" json:"port"`
 	IsOnline     bool      `gorm:"column:is_online;notNull;default:FALSE" json:"is_online"`
-	RegisteredAt orm.Time  `gorm:"column:registered_at;notNull;default:CURRENT_TIMESTAMP;comment:注册时间" json:"registered_at"` // 注册时间
-	KeepaliveAt  orm.Time  `gorm:"column:keepalive_at;notNull;default:CURRENT_TIMESTAMP;comment:心跳时间" json:"keepalive_at"`   // 心跳时间
-	Keepalives   int       `gorm:"column:keepalives;notNull;default:0;comment:心跳间隔" json:"keepalives"`                       // 心跳间隔
-	Expires      int       `gorm:"column:expires;notNull;default:0;comment:注册有效期" json:"expires"`                            // 注册有效期
-	Channels     int       `gorm:"column:channels;notNull;default:0;comment:通道数量" json:"channels"`                           // 通道数量
-	CreatedAt    orm.Time  `gorm:"column:created_at;notNull;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"`       // 创建时间
-	UpdatedAt    orm.Time  `gorm:"column:updated_at;notNull;default:CURRENT_TIMESTAMP;comment:更新时间" json:"updated_at"`       // 更新时间
+	RegisteredAt orm.Time  `gorm:"column:registered_at;notNull;type:TIMESTAMP;default:CURRENT_TIMESTAMP;comment:注册时间" json:"registered_at"` // 注册时间
+	KeepaliveAt  orm.Time  `gorm:"column:keepalive_at;notNull;type:TIMESTAMP;default:CURRENT_TIMESTAMP;comment:心跳时间" json:"keepalive_at"`   // 心跳时间
+	Keepalives   int       `gorm:"column:keepalives;notNull;default:0;comment:心跳间隔" json:"keepalives"`                                      // 心跳间隔
+	Expires      int       `gorm:"column:expires;notNull;default:0;comment:注册有效期" json:"expires"`                                           // 注册有效期
+	Channels     int       `gorm:"column:channels;notNull;default:0;comment:通道数量" json:"channels"`                                          // 通道数量
+	CreatedAt    orm.Time  `gorm:"column:created_at;notNull;type:TIMESTAMP;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"`       // 创建时间
+	UpdatedAt    orm.Time  `gorm:"column:updated_at;notNull;type:TIMESTAMP;default:CURRENT_TIMESTAMP;comment:更新时间" json:"updated_at"`       // 更新时间
 	Password     string    `gorm:"column:password;notNull;default:'';comment:注册密码" json:"password"`
 	Address      string    `gorm:"column:address;notNull;default:'';comment:设备网络地址" json:"address"`
-	Ext          DeviceExt `gorm:"column:ext;notNull;default:'{}';type:jsonb;comment:设备属性" json:"ext"` // 设备属性
+	Ext          DeviceExt `gorm:"column:ext;notNull;type:JSON;comment:设备属性" json:"ext"` // 设备属性
 }
 
 // TableName database table name

@@ -6,8 +6,8 @@ import "github.com/ixugo/goweb/pkg/orm"
 // StreamProxy domain model
 type StreamProxy struct {
 	ID                        string   `gorm:"primaryKey" json:"id"`
-	CreatedAt                 orm.Time `gorm:"column:created_at;notNull;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"`                              // 创建时间
-	UpdatedAt                 orm.Time `gorm:"column:updated_at;notNull;default:CURRENT_TIMESTAMP;comment:更新时间" json:"updated_at"`                              // 更新时间
+	CreatedAt                 orm.Time `gorm:"column:created_at;notNull;type:TIMESTAMP;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"`               // 创建时间
+	UpdatedAt                 orm.Time `gorm:"column:updated_at;notNull;type:TIMESTAMP;default:CURRENT_TIMESTAMP;comment:更新时间" json:"updated_at"`               // 更新时间
 	App                       string   `gorm:"column:app;uniqueIndex:idx_stream_proxys_app_stream;notNull;default:'';comment:应用名" json:"app"`                   // 应用名
 	Stream                    string   `gorm:"column:stream;uniqueIndex:idx_stream_proxys_app_stream;notNull;default:'';comment:流 id" json:"stream"`            // 流 id
 	MediaServerID             string   `gorm:"column:media_server_id;notNull;default:'';comment:媒体服务器 id" json:"media_server_id"`                               // 媒体服务器 id

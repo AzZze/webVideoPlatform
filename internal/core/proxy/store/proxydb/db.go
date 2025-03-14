@@ -25,9 +25,7 @@ func (d DB) StreamProxy() proxy.StreamProxyStorer {
 
 // AutoMigrate sync database
 func (d DB) AutoMigrate(ok bool) DB {
-	if !ok {
-		return d
-	}
+
 	if err := d.db.AutoMigrate(
 		new(proxy.StreamProxy),
 	); err != nil {

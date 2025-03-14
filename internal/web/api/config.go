@@ -8,7 +8,6 @@ import (
 	"github.com/gowvp/gb28181/internal/conf"
 	"github.com/gowvp/gb28181/internal/core/config"
 	"github.com/gowvp/gb28181/internal/core/config/store/configdb"
-	"github.com/ixugo/goweb/pkg/orm"
 	"github.com/ixugo/goweb/pkg/web"
 	"github.com/jinzhu/copier"
 	"gorm.io/gorm"
@@ -20,7 +19,7 @@ type ConfigAPI struct {
 }
 
 func NewConfigAPI(db *gorm.DB, conf *conf.Bootstrap) ConfigAPI {
-	core := config.NewCore(configdb.NewDB(db).AutoMigrate(orm.EnabledAutoMigrate))
+	core := config.NewCore(configdb.NewDB(db).AutoMigrate(true))
 	return ConfigAPI{configCore: core, conf: conf}
 }
 

@@ -11,8 +11,8 @@ const (
 // StreamPush domain model
 type StreamPush struct {
 	ID             string    `gorm:"primaryKey" json:"id"`
-	CreatedAt      orm.Time  `gorm:"column:created_at;notNull;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"`                  // 创建时间
-	UpdatedAt      orm.Time  `gorm:"column:updated_at;notNull;default:CURRENT_TIMESTAMP;comment:更新时间" json:"updated_at"`                  // 更新时间
+	CreatedAt      orm.Time  `gorm:"column:created_at;notNull;type:TIMESTAMP;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"`   // 创建时间
+	UpdatedAt      orm.Time  `gorm:"column:updated_at;notNull;type:TIMESTAMP;default:CURRENT_TIMESTAMP;comment:更新时间" json:"updated_at"`   // 更新时间
 	Name           string    `gorm:"column:name;notNull;default:'';comment:推流名称" json:"name"`                                             // 推流名称
 	PushedAt       *orm.Time `gorm:"column:pushed_at;notNull;default:'1970-01-01 00:00:00';comment:最后一次推流时间" json:"pushed_at"`            // 最后一次推流时间
 	StoppedAt      *orm.Time `gorm:"column:stopped_at;notNull;default:'1970-01-01 00:00:00';comment:最后一次停止时间" json:"stopped_at"`          // 最后一次停止时间

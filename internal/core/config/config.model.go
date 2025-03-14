@@ -6,10 +6,10 @@ import "github.com/ixugo/goweb/pkg/orm"
 // Config domain model
 type Config struct {
 	ID        string   `gorm:"primaryKey" json:"id"`
-	CreatedAt orm.Time `gorm:"column:created_at;notNull;default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt orm.Time `gorm:"column:updated_at;notNull;default:CURRENT_TIMESTAMP" json:"updated_at"`
+	CreatedAt orm.Time `gorm:"column:created_at;notNull;type:TIMESTAMP;default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt orm.Time `gorm:"column:updated_at;notNull;type:TIMESTAMP;default:CURRENT_TIMESTAMP" json:"updated_at"`
 	Type      string   `gorm:"column:type;notNull;default:''" json:"type"`
-	Ext       Ext      `gorm:"column:ext;notNull;default:'{}';type:jsonb" json:"data"`
+	Ext       Ext      `gorm:"column:ext;notNull;type:JSON" json:"data"`
 }
 
 // TableName database table name

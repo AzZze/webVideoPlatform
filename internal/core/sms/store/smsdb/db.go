@@ -2,7 +2,9 @@
 package smsdb
 
 import (
+	"github.com/gowvp/gb28181/internal/core/gb28181"
 	"github.com/gowvp/gb28181/internal/core/sms"
+	"github.com/gowvp/gb28181/pkg/gbs"
 	"gorm.io/gorm"
 )
 
@@ -25,11 +27,11 @@ func (d DB) MediaServer() sms.MediaServerStorer {
 
 // AutoMigrate sync database
 func (d DB) AutoMigrate(ok bool) DB {
-	if !ok {
-		return d
-	}
+
 	if err := d.db.AutoMigrate(
 		new(sms.MediaServer),
+		new(gb28181.Device),
+		new(gbs.Streams),
 	); err != nil {
 		panic(err)
 	}

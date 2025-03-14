@@ -6,7 +6,6 @@ import (
 	"github.com/gowvp/gb28181/internal/core/proxy"
 	"github.com/gowvp/gb28181/internal/core/proxy/store/proxydb"
 	"github.com/gowvp/gb28181/internal/core/uniqueid"
-	"github.com/ixugo/goweb/pkg/orm"
 	"github.com/ixugo/goweb/pkg/web"
 	"gorm.io/gorm"
 )
@@ -16,7 +15,7 @@ type ProxyAPI struct {
 }
 
 func NewProxyAPI(db *gorm.DB, uni uniqueid.Core) ProxyAPI {
-	core := proxy.NewCore(proxydb.NewDB(db).AutoMigrate(orm.EnabledAutoMigrate), uni)
+	core := proxy.NewCore(proxydb.NewDB(db).AutoMigrate(true), uni)
 	return ProxyAPI{proxyCore: core}
 }
 

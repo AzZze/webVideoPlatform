@@ -101,15 +101,15 @@ func NewVersion(db *gorm.DB) version.Core {
 
 // NewUniqueID 唯一 id 生成器
 func NewUniqueID(db *gorm.DB) uniqueid.Core {
-	return uniqueid.NewCore(uniqueiddb.NewDB(db).AutoMigrate(orm.EnabledAutoMigrate), 5)
+	return uniqueid.NewCore(uniqueiddb.NewDB(db).AutoMigrate(true), 5)
 }
 
 func NewMediaCore(db *gorm.DB, uni uniqueid.Core) media.Core {
-	return media.NewCore(mediadb.NewDB(db).AutoMigrate(orm.EnabledAutoMigrate), uni)
+	return media.NewCore(mediadb.NewDB(db).AutoMigrate(true), uni)
 }
 
 func NewGB28181Store(db *gorm.DB) gb28181.Storer {
-	return gb28181cache.NewCache(gb28181db.NewDB(db).AutoMigrate(orm.EnabledAutoMigrate))
+	return gb28181cache.NewCache(gb28181db.NewDB(db).AutoMigrate(true))
 }
 
 func NewGB28181(store gb28181.Storer, uni uniqueid.Core) gb28181.GB28181 {

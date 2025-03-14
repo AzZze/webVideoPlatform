@@ -119,7 +119,7 @@ func (n *NodeManager) connection(server *MediaServer, serverPort int) {
 	url := fmt.Sprintf("http://%s:%d", server.IP, server.Ports.HTTP)
 	engine := n.zlm.SetConfig(zlm.Config{
 		URL:    url,
-		Secret: server.Secret,
+		Secret: "s1kPE7bzqKeHUaVcp8dCA0jeB8yxyFq4",
 	})
 
 	log := slog.With("url", url, "id", server.ID)

@@ -41,13 +41,14 @@ func main() {
 	if err := os.Chdir(filepath.Dir(bin)); err != nil {
 		slog.Error("change dir error")
 	}
+
 	// 初始化配置
 	var bc conf.Bootstrap
 	// 获取配置目录绝对路径
 	fileDir, _ := abs(*configDir)
 	filePath := filepath.Join(fileDir, "config.toml")
 	configIsNotExistWrite(filePath)
-	if err := conf.SetupConfig(&bc, filePath); err != nil {
+	if err := conf.SetupConfig(&bc, "E:\\goWorkSpace\\gb28181\\configs\\config.toml"); err != nil {
 		panic(err)
 	}
 
