@@ -36,8 +36,6 @@ go wvp 是 Go 语言实现的开源 GB28181 解决方案，基于 GB28181-2022 �
 
 项目框架基于 @ixugo [goweb](https://github.com/ixugo/goweb)
 
-Java 语言 WVP @648540858 [wvp-GB28181-pro](https://github.com/648540858/wvp-GB28181-pro)
-
 ## QA
 
 > 怎么没有前端资源? 如何加载网页呢?
@@ -92,9 +90,54 @@ ZLM使用文档 [github.com/ZLMediaKit/ZLMediaKit](https://github.com/ZLMediaKit
 
 ## Docker
 
+### 视频指南
+
+[如何构建或运行项目](https://www.bilibili.com/video/BV1QLQeYHEXb)
+
+[如何用 docker compose 部署项目](https://www.bilibili.com/video/BV112QYY3EZX)
+
+
+
+
 [docker hub](https://hub.docker.com/r/gospace/gowvp)
 
-** gowvp & zlmediakit 融合镜像**
+** gowvp & zlmediakit 分开镜像(推荐)**
+
+```yml
+services:
+  gowvp:
+    image: registry.cn-shanghai.aliyuncs.com/ixugo/gowvp:latest
+    ports:
+      - 15123:15123 # 管理平台 http 端口
+      - 15060:15060 # gb28181 sip tcp 端口
+      - 15060:15060/udp # gb28181 sip udp 端口
+    volumes:
+      # - ./logs:/app/logs # 如果需要持久化日志，请取消注释
+      - ./configs:/app/configs
+    depends_on:
+      - zlm
+  zlm:
+    image: zlmediakit/zlmediakit:master
+    restart: always
+    # 推荐 linux 主机使用 host 模式
+    # network_mode: host
+    ports:
+      - 1935:1935 # rtmp
+      - 554:554 # rtsp
+      - 8080:80 # api
+      - 8443:443
+      - 10000:10000
+      - 10000:10000/udp
+      - 8000:8000/udp
+      - 9000:9000/udp
+      - 20050-20100:20050-20100
+      - 20050-20100:20050-20100/udp
+    volumes:
+      - ./configs:/opt/media/conf
+
+```
+
+** gowvp & zlmediakit 融合镜像(不推荐)**
 docker-compose.yml
 ```yml
 services:
@@ -117,39 +160,6 @@ services:
       - ./configs:/opt/media/bin/configs
       - ./logs:/opt/media/bin/logs
       - ./zlm.conf:/opt/media/conf
-```
-
-** gowvp & zlmediakit 分开镜像**
-
-```yml
-services:
-  gowvp:
-    image: registry.cn-shanghai.aliyuncs.com/ixugo/gowvp:latest
-    ports:
-      - 15123:15123 # 管理平台 http 端口
-      - 15060:15060 # gb28181 sip tcp 端口
-      - 15060:15060/udp # gb28181 sip udp 端口
-    volumes:
-      - ./logs:/app/logs
-      - ./configs:/app/configs
-  zlm:
-    image: zlmediakit/zlmediakit:master
-    restart: always
-    # 推荐 linux 主机使用 host 模式
-    # network_mode: host
-    ports:
-      - 1935:1935 # rtmp
-      - 554:554 # rtsp
-      - 8080:80 # api
-      - 8443:443
-      - 10000:10000
-      - 10000:10000/udp
-      - 8000:8000/udp
-      - 9000:9000/udp
-      - 20050-20100:20050-20100
-      - 20050-20100:20050-20100/udp
-    volumes:
-      - ./conf:/opt/media/conf
 ```
 
 
@@ -208,6 +218,7 @@ services:
   - [ ] 录像回放
   - [ ] 报警事件订阅
   - [ ] 报警事件通知处理
+  - [ ] 快照
 
 ## 授权协议
 

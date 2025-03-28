@@ -2,6 +2,7 @@ package gb28181cache
 
 import (
 	"context"
+	"log/slog"
 
 	"github.com/ixugo/goweb/pkg/orm"
 	"gorm.io/gorm"
@@ -12,7 +13,7 @@ import (
 
 var _ gb28181.DeviceStorer = &Device{}
 
-type Device Cache
+type Device = Cache
 
 // Add implements gb28181.DeviceStorer.
 func (d *Device) Add(ctx context.Context, dev *gb28181.Device) error {
@@ -47,7 +48,23 @@ func (d *Device) Del(ctx context.Context, dev *gb28181.Device, opts ...orm.Query
 
 // Edit implements gb28181.DeviceStorer.
 func (d *Device) Edit(ctx context.Context, dev *gb28181.Device, changeFn func(*gb28181.Device), opts ...orm.QueryOption) error {
-	return d.Storer.Device().Edit(ctx, dev, changeFn, opts...)
+	if err := d.Storer.Device().Edit(ctx, dev, changeFn, opts...); err != nil {
+		return err
+	}
+	dev2, ok := d.devices.Load(dev.DeviceID)
+	if !ok {
+		panic("edit device not found")
+	}
+	// 密码修改，设备需要重新注册
+	if dev2.Password != dev.Password && dev.Password != "" {
+		slog.Info("修改密码，设备离线")
+		d.Change(dev.DeviceID, func(d *gb28181.Device) {
+			d.Password = dev.Password
+			d.IsOnline = false
+		}, func(d *gbs.Device) {
+		})
+	}
+	return nil
 }
 
 // Find implements gb28181.DeviceStorer.

@@ -13,7 +13,7 @@ type MediaServer struct {
 	CreatedAt         orm.Time         `gorm:"column:created_at;not null;type:TIMESTAMP;default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt         orm.Time         `gorm:"column:updated_at;not null;type:TIMESTAMP;default:CURRENT_TIMESTAMP" json:"updated_at"`
 	HookIP            string           `gorm:"column:hook_ip;not null;default:''" json:"hook_ip"`
-	SDPIP             string           `gorm:"column:sdpip;not null;default:''" json:"sdpip"`
+	SDPIP             string           `gorm:"column:sdpip;not null;default:''" json:"sdp_ip"`
 	StreamIP          string           `gorm:"column:stream_ip;not null;default:''" json:"stream_ip"`
 	Ports             MediaServerPorts `gorm:"column:ports;not null;type:JSON" json:"ports"`
 	AutoConfig        bool             `gorm:"column:auto_config;not null;default:FALSE" json:"auto_config"`

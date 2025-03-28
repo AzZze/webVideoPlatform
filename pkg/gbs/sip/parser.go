@@ -583,7 +583,7 @@ func (p *parser) start() {
 		packet = <-p.in
 		startLine, err := packet.nextLine()
 		if err != nil {
-			slog.Error("start", "err", err, "line", startLine)
+			slog.Error("start nextLine", "err", err, "line", startLine)
 			continue
 		}
 		if isRequest(startLine) {
@@ -601,11 +601,11 @@ func (p *parser) start() {
 				termErr = NewError(err, "parserMessage", "ParseStatusLine", startLine)
 			}
 		} else {
-			slog.Error("start", "err", err, "line", startLine)
+			slog.Error("start unknown", "err", err, "line", startLine)
 			continue
 		}
 		if termErr != nil {
-			slog.Error("start", "err", err, "line", startLine)
+			slog.Error("start termErr", "err", termErr, "line", startLine)
 			continue
 		}
 		var buffer bytes.Buffer
@@ -617,8 +617,7 @@ func (p *parser) start() {
 				if err == nil {
 					headers = append(headers, newHeaders...)
 				} else {
-					slog.Error("start", "err", err, "line", buffer.String())
-					// slog.Warn("skip header '%s' due to error: %s", buffer, err)
+					slog.Error("start flushBuffer", "err", err, "line", buffer.String())
 				}
 				buffer.Reset()
 			}

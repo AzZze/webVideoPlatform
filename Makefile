@@ -158,6 +158,12 @@ BUILD_LINUX_AMD64_DIR := ./build/linux_amd64
 build/linux:
 	$(eval GOARCH := amd64)
 	$(eval GOOS := linux)
+	$(eval dir := $(BUILD_DIR_ROOT)/$(GOOS)_$(GOARCH))
+	@make build/local GOOS=$(GOOS) GOARCH=$(GOARCH)
+
+	$(eval GOARCH := arm64)
+	$(eval GOOS := linux)
+	$(eval dir := $(BUILD_DIR_ROOT)/$(GOOS)_$(GOARCH))
 	@make build/local GOOS=$(GOOS) GOARCH=$(GOARCH)
 
 ## build/windows: 构建 windows 应用
@@ -178,7 +184,10 @@ docker/push:
 	@docker push $(IMAGE_NAME)
 
 docker/build/full:
-	@docker build --force-rm=true --platform linux/amd64 -t $(IMAGE_NAME) -f Dockerfile_full .
+	@docker build --force-rm=true --push --platform linux/amd64,linux/arm64 -t $(IMAGE_NAME) -f Dockerfile_full .
+
+docker/build/gowvp: build/clean build/linux
+	@docker build --force-rm=true --push --platform linux/amd64,linux/arm64 -t registry.cn-shanghai.aliyuncs.com/ixugo/gowvp:latest -f Dockerfile .
 
 
 # ==================================================================================== #

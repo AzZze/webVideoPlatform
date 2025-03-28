@@ -48,8 +48,9 @@ func (e Engine) SetConfig(cfg Config) Engine {
 }
 
 func (e *Engine) post(path string, data map[string]any, out any) error {
-	bodyMap := map[string]any{
-		"secret": e.cfg.Secret,
+	bodyMap := make(map[string]any)
+	if e.cfg.Secret != "" {
+		bodyMap["secret"] = e.cfg.Secret
 	}
 	maps.Copy(bodyMap, data)
 	body, _ := json.Marshal(bodyMap)

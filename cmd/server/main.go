@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"syscall"
 	"time"
@@ -46,6 +47,7 @@ func main() {
 	var bc conf.Bootstrap
 	// 获取配置目录绝对路径
 	fileDir, _ := abs(*configDir)
+	os.MkdirAll(fileDir, 0o755)
 	filePath := filepath.Join(fileDir, "config.toml")
 	configIsNotExistWrite(filePath)
 	if err := conf.SetupConfig(&bc, filePath); err != nil {
@@ -75,6 +77,14 @@ func main() {
 		expvar.Publish("timestamp", expvar.Func(func() any {
 			return time.Now().Format(time.DateTime)
 		}))
+	}
+
+	secret, err := getSecret(*configDir)
+	if err == nil {
+		slog.Info("发现 zlm 配置，已赋值，未回写配置文件", "secret", secret)
+		bc.Media.Secret = secret
+	} else {
+		slog.Info("未发现 zlm 配置，请检查 config.ini 文件", "err", err)
 	}
 
 	handler, cleanUp, err := wireApp(&bc, log)
@@ -125,4 +135,18 @@ func configIsNotExistWrite(path string) {
 			system.ErrPrintf("WriteConfig", "err", err)
 		}
 	}
+}
+
+// 读取 config.ini 文件，通过正则表达式，获取 secret 的值
+func getSecret(configDir string) (string, error) {
+	content, err := os.ReadFile(filepath.Join(system.Getwd(), configDir, "config.ini"))
+	if err != nil {
+		return "", err
+	}
+	re := regexp.MustCompile(`secret=(\w+)`)
+	matches := re.FindStringSubmatch(string(content))
+	if len(matches) < 2 {
+		return "", fmt.Errorf("secret not found")
+	}
+	return matches[1], nil
 }

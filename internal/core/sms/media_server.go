@@ -54,7 +54,7 @@ func (c *Core) AddMediaServer(ctx context.Context, in *AddMediaServerInput) (*Me
 }
 
 // EditMediaServer Update object information
-func (c *Core) EditMediaServer(ctx context.Context, in *EditMediaServerInput, id string) (*MediaServer, error) {
+func (c *Core) EditMediaServer(ctx context.Context, in *EditMediaServerInput, id string, serverPort int) (*MediaServer, error) {
 	var out MediaServer
 	if err := c.storer.MediaServer().Edit(ctx, &out, func(b *MediaServer) {
 		if err := copier.Copy(b, in); err != nil {
@@ -63,6 +63,7 @@ func (c *Core) EditMediaServer(ctx context.Context, in *EditMediaServerInput, id
 	}, orm.Where("id=?", id)); err != nil {
 		return nil, web.ErrDB.Withf(`Edit err[%s]`, err.Error())
 	}
+	c.connection(&out, serverPort)
 	return &out, nil
 }
 

@@ -12,6 +12,7 @@ import (
 
 type SmsAPI struct {
 	smsCore sms.Core
+	uc      *Usecase
 }
 
 func NewSMSCore(db *gorm.DB, cfg *conf.Bootstrap) sms.Core {
@@ -30,10 +31,11 @@ func registerSms(g gin.IRouter, api SmsAPI, handler ...gin.HandlerFunc) {
 	{
 		group := g.Group("/media_servers", handler...)
 		group.GET("", web.WarpH(api.findMediaServer))
-		group.GET("/:id", web.WarpH(api.getMediaServer))
 		group.PUT("/:id", web.WarpH(api.editMediaServer))
-		group.POST("", web.WarpH(api.addMediaServer))
-		group.DELETE("/:id", web.WarpH(api.delMediaServer))
+
+		// group.GET("/:id", web.WarpH(api.getMediaServer))
+		// group.POST("", web.WarpH(api.addMediaServer))
+		// group.DELETE("/:id", web.WarpH(api.delMediaServer))
 	}
 }
 
@@ -51,7 +53,20 @@ func (a SmsAPI) getMediaServer(c *gin.Context, _ *struct{}) (any, error) {
 
 func (a SmsAPI) editMediaServer(c *gin.Context, in *sms.EditMediaServerInput) (any, error) {
 	mediaServerID := c.Param("id")
-	return a.smsCore.EditMediaServer(c.Request.Context(), in, mediaServerID)
+	out, err := a.smsCore.EditMediaServer(c.Request.Context(), in, mediaServerID, a.uc.Conf.Server.HTTP.Port)
+	if err != nil {
+		return nil, err
+	}
+	if mediaServerID == "local" {
+		a.uc.Conf.Media.IP = out.IP
+		a.uc.Conf.Media.SDPIP = out.SDPIP
+		a.uc.Conf.Media.Secret = out.Secret
+		a.uc.Conf.Media.WebHookIP = out.HookIP
+		if err := conf.WriteConfig(a.uc.Conf, a.uc.Conf.ConfigPath); err != nil {
+			return nil, web.ErrServer.Msg(err.Error())
+		}
+	}
+	return out, err
 }
 
 func (a SmsAPI) addMediaServer(c *gin.Context, in *sms.AddMediaServerInput) (any, error) {

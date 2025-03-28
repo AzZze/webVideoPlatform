@@ -23,6 +23,7 @@ var startRuntime = time.Now()
 
 func setupRouter(r *gin.Engine, uc *Usecase) {
 	uc.GB28181API.uc = uc
+	uc.SMSAPI.uc = uc
 	go stat.LoadTop(system.Getwd(), func(m map[string]any) {
 		_ = m
 	})
@@ -70,6 +71,7 @@ func setupRouter(r *gin.Engine, uc *Usecase) {
 	registerGB28181(r, uc.GB28181API)
 	registerProxy(r, uc.ProxyAPI)
 	registerConfig(r, uc.ConfigAPI)
+	registerSms(r, uc.SMSAPI)
 }
 
 type playOutput struct {

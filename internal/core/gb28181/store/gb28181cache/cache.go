@@ -88,8 +88,9 @@ func (c *Cache) Change(deviceID string, changeFn func(*gb28181.Device), changeFn
 	dev2.LastKeepaliveAt = dev.KeepaliveAt.Time
 	dev2.LastRegisterAt = dev.RegisteredAt.Time
 	dev2.Expires = dev.Expires
+	dev2.Password = dev.Password
+	dev2.Address = dev.Address
 	changeFn2(dev2)
-
 	if !dev2.IsOnline {
 		if err := c.Storer.Channel().BatchEdit(context.TODO(), "is_online", false, orm.Where("did=?", dev.ID)); err != nil {
 			slog.Error("更新通道离线状态失败", "error", err)

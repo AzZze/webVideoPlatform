@@ -29,6 +29,7 @@ type Device struct {
 
 	IsOnline bool
 	Address  string
+	Password string
 
 	conn   sip.Connection
 	source net.Addr
@@ -63,6 +64,7 @@ func NewDevice(conn sip.Connection, d *gb28181.Device) *Device {
 		LastKeepaliveAt: d.KeepaliveAt.Time,
 		LastRegisterAt:  d.RegisteredAt.Time,
 		IsOnline:        d.IsOnline,
+		Password:        d.Password,
 	}
 
 	return &c
