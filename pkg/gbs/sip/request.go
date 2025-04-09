@@ -8,21 +8,21 @@ import (
 	"github.com/gofrs/uuid"
 )
 
-// Request Request
+// Request SIP请求结构体，包含消息基本信息、方法和接收者
 type Request struct {
 	message
-	method    string
-	recipient *URI
+	method    string // SIP方法名（如REGISTER, INVITE等）
+	recipient *URI   // 接收者的URI
 }
 
-// NewRequest NewRequest
+// NewRequest 创建新的SIP请求
 func NewRequest(
-	messID MessageID,
-	method string,
-	recipient *URI,
-	sipVersion string,
-	hdrs []Header,
-	body []byte,
+	messID MessageID, // 消息ID
+	method string, // SIP方法
+	recipient *URI, // 接收者URI
+	sipVersion string, // SIP版本
+	hdrs []Header, // SIP头部字段
+	body []byte, // 消息体
 ) *Request {
 	req := new(Request)
 	if messID == "" {
@@ -42,7 +42,7 @@ func NewRequest(
 	return req
 }
 
-// NewRequestFromResponse NewRequestFromResponse
+// NewRequestFromResponse 根据响应创建新的请求（通常用于ACK等）
 func NewRequestFromResponse(method string, inviteResponse *Response) *Request {
 	contact, _ := inviteResponse.Contact()
 	ackRequest := NewRequest(
@@ -85,7 +85,7 @@ func NewRequestFromResponse(method string, inviteResponse *Response) *Request {
 	return ackRequest
 }
 
-// StartLine returns Request Line - RFC 2361 7.1.
+// StartLine 返回请求行（RFC 2361 7.1）
 func (req *Request) StartLine() string {
 	var buffer bytes.Buffer
 
@@ -102,57 +102,57 @@ func (req *Request) StartLine() string {
 	return buffer.String()
 }
 
-// Method Method
+// Method 获取请求方法
 func (req *Request) Method() string {
 	return req.method
 }
 
-// SetMethod SetMethod
+// SetMethod 设置请求方法
 func (req *Request) SetMethod(method string) {
 	req.method = method
 }
 
-// Recipient Recipient
+// Recipient 获取接收者URI
 func (req *Request) Recipient() *URI {
 	return req.recipient
 }
 
-// SetRecipient SetRecipient
+// SetRecipient 设置接收者URI
 func (req *Request) SetRecipient(recipient *URI) {
 	req.recipient = recipient
 }
 
-// IsInvite IsInvite
+// IsInvite 判断是否为INVITE请求
 func (req *Request) IsInvite() bool {
 	return req.Method() == MethodInvite
 }
 
-// IsAck IsAck
+// IsAck 判断是否为ACK请求
 func (req *Request) IsAck() bool {
 	return req.Method() == MethodACK
 }
 
-// IsCancel IsCancel
+// IsCancel 判断是否为CANCEL请求
 func (req *Request) IsCancel() bool {
 	return req.Method() == MethodCancel
 }
 
-// Source Source
+// Source 获取请求源地址
 func (req *Request) Source() net.Addr {
 	return req.source
 }
 
-// SetSource SetSource
+// SetSource 设置请求源地址
 func (req *Request) SetSource(src net.Addr) {
 	req.source = src
 }
 
-// Destination Destination
+// Destination 获取请求目标地址
 func (req *Request) Destination() net.Addr {
 	return req.dest
 }
 
-// SetDestination SetDestination
+// SetDestination 设置请求目标地址
 func (req *Request) SetDestination(dest net.Addr) {
 	req.dest = dest
 }
@@ -165,7 +165,7 @@ func (req *Request) GetConnection() Connection {
 	return req.conn
 }
 
-// Clone Clone
+// Clone 克隆请求对象
 func (req *Request) Clone() Message {
 	return NewRequest(
 		"",

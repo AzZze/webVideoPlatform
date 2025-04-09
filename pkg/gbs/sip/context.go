@@ -12,27 +12,29 @@ const abortIndex int8 = math.MaxInt8 >> 1
 
 type HandlerFunc func(*Context)
 
+// Context SIP请求处理的上下文结构体
 type Context struct {
-	Request  *Request
-	Tx       *Transaction
-	handlers []HandlerFunc
-	index    int8
+	Request  *Request      // SIP请求对象
+	Tx       *Transaction  // 事务对象
+	handlers []HandlerFunc // 处理函数列表
+	index    int8          // 当前执行的处理函数索引
 
-	cache map[string]any
+	cache map[string]any // 缓存数据
 
-	DeviceID string
-	Host     string
-	Port     string
+	DeviceID string // 设备ID
+	Host     string // 主机地址
+	Port     string // 端口号
 
-	Source net.Addr
-	To     *Address
-	From   *Address
+	Source net.Addr // 源地址
+	To     *Address // 目标地址
+	From   *Address // 来源地址
 
-	Log *slog.Logger
+	Log *slog.Logger // 日志记录器
 
-	svr *Server
+	svr *Server // SIP服务器实例
 }
 
+// newContext 创建新的上下文实例
 func newContext(req *Request, tx *Transaction) *Context {
 	c := Context{
 		Request: req,
@@ -47,6 +49,7 @@ func newContext(req *Request, tx *Transaction) *Context {
 	return &c
 }
 
+// parserRequest 解析SIP请求，提取关键信息
 func (c *Context) parserRequest() error {
 	req := c.Request
 	header, ok := req.From()
@@ -77,6 +80,7 @@ func (c *Context) parserRequest() error {
 	return nil
 }
 
+// Next 执行下一个处理函数
 func (c *Context) Next() {
 	c.index++
 	for c.index < int8(len(c.handlers)) {
@@ -87,6 +91,7 @@ func (c *Context) Next() {
 	}
 }
 
+// GetHeader 获取指定头部字段的值
 func (c *Context) GetHeader(key string) string {
 	headers := c.Request.GetHeaders(key)
 	if len(headers) > 0 {
@@ -99,28 +104,34 @@ func (c *Context) GetHeader(key string) string {
 	return ""
 }
 
+// Abort 中止处理流程
 func (c *Context) Abort() {
 	c.index = abortIndex
 }
 
+// AbortString 中止处理并返回错误信息
 func (c *Context) AbortString(status int, msg string) {
 	c.Abort()
 	c.String(status, msg)
 }
 
+// String 发送文本响应
 func (c *Context) String(status int, msg string) {
 	_ = c.Tx.Respond(NewResponseFromRequest("", c.Request, status, msg, nil))
 }
 
+// Set 设置上下文缓存数据
 func (c *Context) Set(k string, v any) {
 	c.cache[k] = v
 }
 
+// Get 获取上下文缓存数据
 func (c *Context) Get(k string) (any, bool) {
 	v, ok := c.cache[k]
 	return v, ok
 }
 
+// GetMustString 获取字符串类型的缓存数据
 func (c *Context) GetMustString(k string) string {
 	if v, ok := c.cache[k]; ok {
 		return v.(string)
@@ -128,6 +139,7 @@ func (c *Context) GetMustString(k string) string {
 	return ""
 }
 
+// GetMustInt 获取整数类型的缓存数据
 func (c *Context) GetMustInt(k string) int {
 	if v, ok := c.cache[k]; ok {
 		return v.(int)
@@ -135,6 +147,7 @@ func (c *Context) GetMustInt(k string) int {
 	return 0
 }
 
+// SendRequest 发送SIP请求
 func (c *Context) SendRequest(method string, body []byte) (*Transaction, error) {
 	hb := NewHeaderBuilder().SetTo(c.To).SetFrom(c.From).AddVia(&ViaHop{
 		Params: NewParams().Add("branch", String{Str: GenerateBranch()}),

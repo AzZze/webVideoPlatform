@@ -12,10 +12,10 @@ import (
 
 // Packet Packet
 type Packet struct {
-	reader     *bufio.Reader
-	raddr      net.Addr
-	bodylength int
-	conn       Connection
+	reader     *bufio.Reader // 用于读取数据的缓冲读取器
+	raddr      net.Addr      // 远程地址
+	bodylength int           // 消息体长度
+	conn       Connection    // 网络连接实例
 }
 
 func newPacket(data []byte, raddr net.Addr, conn Connection) Packet {
@@ -66,17 +66,16 @@ type Connection interface {
 	net.Conn
 	Network() string
 	// String() string
-	ReadFrom(buf []byte) (num int, raddr net.Addr, err error)
-	WriteTo(buf []byte, raddr net.Addr) (num int, err error)
+	ReadFrom(buf []byte) (num int, raddr net.Addr, err error) // 从连接读取数据
+	WriteTo(buf []byte, raddr net.Addr) (num int, err error)  // 向连接写入数据
 }
 
-// Connection implementation.
+// connection 连接实现结构体
 type connection struct {
-	baseConn net.Conn
-	laddr    net.Addr
-	raddr    net.Addr
-	// mu       sync.RWMutex
-	logKey string
+	baseConn net.Conn // 底层网络连接
+	laddr    net.Addr // 本地地址
+	raddr    net.Addr // 远程地址
+	logKey   string   // 日志标识符
 }
 
 func NewUDPConnection(baseConn net.Conn) Connection {
@@ -99,6 +98,7 @@ func NewTCPConnection(baseConn net.Conn) Connection {
 	return conn
 }
 
+// Read 从连接读取数据
 func (conn *connection) Read(buf []byte) (int, error) {
 	var (
 		num int
@@ -112,6 +112,7 @@ func (conn *connection) Read(buf []byte) (int, error) {
 	return num, err
 }
 
+// ReadFrom 从指定地址读取数据
 func (conn *connection) ReadFrom(buf []byte) (num int, raddr net.Addr, err error) {
 	num, raddr, err = conn.baseConn.(net.PacketConn).ReadFrom(buf)
 	if err != nil {
@@ -121,6 +122,7 @@ func (conn *connection) ReadFrom(buf []byte) (num int, raddr net.Addr, err error
 	return num, raddr, err
 }
 
+// Write 向连接写入数据
 func (conn *connection) Write(buf []byte) (int, error) {
 	var (
 		num int
@@ -134,6 +136,7 @@ func (conn *connection) Write(buf []byte) (int, error) {
 	return num, err
 }
 
+// WriteTo 向指定地址写入数据
 func (conn *connection) WriteTo(buf []byte, raddr net.Addr) (num int, err error) {
 	if conn.Network() == "tcp" {
 		num, err = conn.baseConn.Write(buf)
@@ -147,14 +150,17 @@ func (conn *connection) WriteTo(buf []byte, raddr net.Addr) (num int, err error)
 	return num, err
 }
 
+// LocalAddr 获取本地地址
 func (conn *connection) LocalAddr() net.Addr {
 	return conn.baseConn.LocalAddr()
 }
 
+// RemoteAddr 获取远程地址
 func (conn *connection) RemoteAddr() net.Addr {
 	return conn.baseConn.RemoteAddr()
 }
 
+// Close 关闭连接
 func (conn *connection) Close() error {
 	err := conn.baseConn.Close()
 	if err != nil {
@@ -163,18 +169,22 @@ func (conn *connection) Close() error {
 	return nil
 }
 
+// Network 获取网络类型
 func (conn *connection) Network() string {
 	return conn.baseConn.LocalAddr().Network()
 }
 
+// SetDeadline 设置连接的读写超时时间
 func (conn *connection) SetDeadline(t time.Time) error {
 	return conn.baseConn.SetDeadline(t)
 }
 
+// SetReadDeadline 设置连接的读取超时时间
 func (conn *connection) SetReadDeadline(t time.Time) error {
 	return conn.baseConn.SetReadDeadline(t)
 }
 
+// SetWriteDeadline 设置连接的写入超时时间
 func (conn *connection) SetWriteDeadline(t time.Time) error {
 	return conn.baseConn.SetWriteDeadline(t)
 }

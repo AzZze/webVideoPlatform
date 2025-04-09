@@ -17,28 +17,33 @@ import (
 )
 
 var bufferSize uint16 = 65535 - 20 - 8 // IPv4 max size - IPv4 Header size - UDP Header size
-
-// Server sip
+/*
+1. 服务器初始化 ( server.go )
+- 监听 UDP/TCP 端口
+- 处理 SIP 消息
+- 管理设备连接
+*/
+// Server sip 服务器结构体，包含了服务器运行所需的核心组件
 type Server struct {
-	udpaddr net.Addr
-	udpConn Connection
+	udpaddr net.Addr   // UDP服务器地址
+	udpConn Connection // UDP连接实例
 
-	txs *transacionts
+	txs *transacionts // 事务管理器
 
-	route conc.Map[string, []HandlerFunc]
+	route conc.Map[string, []HandlerFunc] // 路由表，存储不同方法对应的处理函数
 
-	port *Port
-	host net.IP
+	port *Port  // UDP端口
+	host net.IP // 服务器IP地址
 
-	tcpPort     *Port
-	tcpListener *net.TCPListener
+	tcpPort     *Port            // TCP端口
+	tcpListener *net.TCPListener // TCP监听器
 
-	tcpaddr net.Addr
+	tcpaddr net.Addr // TCP服务器地址
 
-	ctx    context.Context
-	cancel context.CancelFunc
+	ctx    context.Context    // 上下文，用于控制服务器生命周期
+	cancel context.CancelFunc // 取消函数
 
-	from *Address
+	from *Address // 服务器地址信息
 }
 
 // NewServer sip server
@@ -96,15 +101,18 @@ func (s *Server) UDPConn() Connection {
 
 // ListenUDPServer ListenUDPServer
 func (s *Server) ListenUDPServer(addr string) {
+	// 解析UDP地址
 	udpaddr, err := net.ResolveUDPAddr("udp", addr)
 	if err != nil {
 		panic(fmt.Errorf("net.ResolveUDPAddr err[%w]", err))
 	}
+	// 设置端口和主机地址
 	s.port = NewPort(udpaddr.Port)
 	s.host, err = ResolveSelfIP()
 	if err != nil {
 		panic(fmt.Errorf("net.ListenUDP resolveip err[%w]", err))
 	}
+	// 创建UDP监听器
 	udp, err := net.ListenUDP("udp", udpaddr)
 	if err != nil {
 		panic(fmt.Errorf("net.ListenUDP err[%w]", err))
@@ -117,7 +125,9 @@ func (s *Server) ListenUDPServer(addr string) {
 	buf := make([]byte, bufferSize)
 	parser := newParser()
 	defer parser.stop()
+	// 启动消息处理协程
 	go s.handlerListen(parser.out)
+	// 主循环：接收UDP数据包
 	for {
 		select {
 		case <-s.ctx.Done():
@@ -128,6 +138,7 @@ func (s *Server) ListenUDPServer(addr string) {
 				slog.Error("udp.ReadFromUDP", "err", err)
 				continue
 			}
+			// 解析收到的数据包
 			parser.in <- newPacket(append([]byte{}, buf[:num]...), raddr, s.udpConn)
 		}
 	}
@@ -240,12 +251,14 @@ func (s *Server) ProcessTcpConn(conn net.Conn) {
 	}
 }
 
+// handlerListen 处理接收到的SIP消息
 func (s *Server) handlerListen(msgs chan Message) {
 	var msg Message
 	for {
 		msg = <-msgs
 		switch tmsg := msg.(type) {
 		case *Request:
+			// 处理SIP请求消息
 			req := tmsg
 
 			dst := s.udpaddr
@@ -256,6 +269,7 @@ func (s *Server) handlerListen(msgs chan Message) {
 			req.SetDestination(dst)
 			s.handlerRequest(req)
 		case *Response:
+			// 处理SIP响应消息
 			resp := tmsg
 
 			dst := s.udpaddr
@@ -265,7 +279,7 @@ func (s *Server) handlerListen(msgs chan Message) {
 			resp.SetDestination(dst)
 			s.handlerResponse(resp)
 		default:
-			// logrus.Errorln("undefind msg type,", tmsg, msg.String())
+			// 未知消息类型
 		}
 	}
 }
