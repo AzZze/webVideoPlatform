@@ -30,9 +30,11 @@ func (o *Observer) Register(deviceID string, duration time.Duration, fn Observer
 	ch := make(chan struct{}, 1)
 	defer close(ch)
 	o.concRegister(deviceID, func(did string, args ...string) bool {
-		if fn(did, args...) {
-			ch <- struct{}{}
-			return true
+		if did == deviceID { // 只在 deviceID 匹配时触发
+			if fn(did, args...) {
+				ch <- struct{}{}
+				return true
+			}
 		}
 		return false
 	})
