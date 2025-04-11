@@ -54,6 +54,10 @@ func (g *GB28181API) StopPlay(in *StopPlayInput) error {
 	return err
 }
 
+/*
+根据设备的设备id和通道id进行播放，
+发送请求给zlm服务器进行数据，一般都是设备主动rtmp推流数据
+*/
 func (g *GB28181API) Play(in *PlayInput) error {
 	ch, ok := g.svr.memoryStorer.GetChannel(in.Channel.DeviceID, in.Channel.ChannelID)
 	if !ok {
@@ -261,6 +265,9 @@ func SipPlay(data *Streams) (*Streams, error) {
 
 var ssrcLock *sync.Mutex
 
+/*
+notice 国标设备在线时 推送流  然后返回zlm的配置流地址、浏览器直接播放zlm的上的地址数据 不经过业务系统
+*/
 func sipPlayPush(data *Streams, channel Channels, device Devices) (*Streams, error) {
 	var (
 		s sdp.Session

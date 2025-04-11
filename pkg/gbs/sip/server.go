@@ -123,6 +123,7 @@ func (s *Server) ListenUDPServer(addr string) {
 		num   int
 	)
 	buf := make([]byte, bufferSize)
+	//监听start() parser.in的写入
 	parser := newParser()
 	defer parser.stop()
 	// 启动消息处理协程
